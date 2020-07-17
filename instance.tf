@@ -1,19 +1,25 @@
 resource "aws_instance"  "wordpress" {
-  ami           = "ami-d36916bc"
+  ami           = "ami-7e257211"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.subnet1.id
   key_name	= aws_key_pair.deployer.key_name
   security_groups =  [aws_security_group.secure1.id]
   vpc_security_group_ids = [aws_security_group.secure1.id]
   associate_public_ip_address = true
+  tags = {
+    Name = "Wordpress"
+  }
 }
 
 resource "aws_instance"  "mysql" {
-  ami           = "ami-0af4f2ae8f9fac390"
+  ami           = "ami-0979674e4a8c6ea0c"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.subnet2.id
   key_name     	= aws_key_pair.deployer.key_name
   security_groups =  [aws_security_group.secure2.id]
   vpc_security_group_ids = [aws_security_group.secure2.id]
-  associate_public_ip_address = true
+  associate_public_ip_address = false
+  tags = {
+    Name = "Mysql"
+  }
 }

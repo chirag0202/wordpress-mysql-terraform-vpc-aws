@@ -1,8 +1,8 @@
 
 resource "aws_security_group" "secure1" {
-  name        = "secure1"
-  vpc_id            = aws_vpc.main.id
-  description = "Allow TLS inbound traffic"
+  name          = "secure1"
+  vpc_id        = aws_vpc.main.id
+  description   = "Allow TLS inbound traffic"
   ingress {
     description = "SSH"
     from_port   = 22
@@ -35,29 +35,31 @@ resource "aws_security_group" "secure1" {
   }
 }
 resource "aws_security_group" "secure2" {
-  name        = "secure2"
-  vpc_id            = aws_vpc.main.id
-  description = "Allow TLS inbound traffic"
+  name          = "secure2"
+  vpc_id        = aws_vpc.main.id
+  description   = "Allow TLS inbound traffic"
   ingress {
     description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [aws_subnet.subnet1.cidr_block]
   }
   ingress {
     description = "MYSQL"
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [aws_subnet.subnet1.cidr_block]
   }
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   tags = {
     Name = "subnet2sg"
   }
