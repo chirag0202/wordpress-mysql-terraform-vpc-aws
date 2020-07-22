@@ -6,6 +6,7 @@ resource "aws_instance"  "wordpress" {
   security_groups =  [aws_security_group.secure1.id]
   vpc_security_group_ids = [aws_security_group.secure1.id]
   associate_public_ip_address = true
+  depends_on = [aws_internet_gateway.intgw]
   tags = {
     Name = "Wordpress"
   }
